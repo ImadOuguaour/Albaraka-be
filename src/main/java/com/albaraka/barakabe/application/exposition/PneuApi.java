@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,14 +33,20 @@ public class PneuApi {
 	}
 
 	@PostMapping
-	public @ResponseBody Pneu addPneu(@RequestBody Pneu pneu) {
+	public @ResponseBody void addPneu(@RequestBody Pneu pneu) {
 		LOGGER.info("ajout du pneu en cours");
-		return pneuService.addPneu(pneu);
+		pneuService.addPneu(pneu);
+	}
+	
+	@PutMapping
+	public @ResponseBody void updatePneu(@RequestBody Pneu pneu) {
+		LOGGER.info("MàJ du pneu en cours");
+		pneuService.updatePneu(pneu);
 	}
 
 	@DeleteMapping("/{id}")
 	public void deletePneu(@PathVariable String id) {
-		LOGGER.info("suppression du pneu {} en cours",id);
+		LOGGER.info("suppression du pneu {} en cours", id);
 		pneuService.deleteById(Integer.valueOf(id));
 	}
 
