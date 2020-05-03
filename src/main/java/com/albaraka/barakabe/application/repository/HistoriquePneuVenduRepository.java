@@ -22,4 +22,10 @@ public interface HistoriquePneuVenduRepository extends JpaRepository<HistoriqueP
 	
 	@Query("select hpv FROM HistoriquePneuVendu hpv WHERE hpv.dateVente = :today")
 	List<HistoriquePneuVendu> venteOfDay(@Param("today") Date today);
+	
+	@Query("select COALESCE(SUM(hpv.benifice),0) FROM HistoriquePneuVendu hpv WHERE (hpv.dateVente between DATE_FORMAT(NOW() ,'%Y-%m-01') AND NOW() )")
+	int venteOfMonth();
+	
+	@Query("select COALESCE(SUM(hpv.benifice),0) FROM HistoriquePneuVendu hpv WHERE hpv.dateVente = subdate(current_date, 1)")
+	int venteOfYesterday();
 }

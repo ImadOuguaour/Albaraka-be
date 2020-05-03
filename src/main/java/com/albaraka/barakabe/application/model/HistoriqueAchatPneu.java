@@ -51,6 +51,9 @@ public class HistoriqueAchatPneu {
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "Europe/Paris")
 	@Column(name = "date_achat")
 	Date dateAchat;
+	
+	@Column(name = "type")
+	private String type;
 
 	public HistoriqueAchatPneu() {
 		this.dateAchat = new Date();

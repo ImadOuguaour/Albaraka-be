@@ -32,7 +32,7 @@ public class PneuService {
 	}
 
 	public void addPneu(Pneu pneu) {
-		Pneu pneuExist = pneuRepository.findFirstByNumeroAndMarque(pneu.getNumero(), pneu.getMarque());
+		Pneu pneuExist = pneuRepository.findFirstByNumeroAndMarqueAndType(pneu.getNumero(), pneu.getMarque(), pneu.getType());
 		if (pneuExist != null) {
 			pneuExist.setQuantite(pneu.getQuantite() + pneuExist.getQuantite());
 			pneuExist.setPrixAchat((pneu.getPrixAchat() + pneuExist.getPrixAchat()) / 2);
@@ -52,12 +52,14 @@ public class PneuService {
 		historiquePneuVendu.setNumero(pneu.getNumero());
 		historiquePneuVendu.setQuantite(quantiteVendu);
 		historiquePneuVendu.setPrixVente(prixVente);
+		historiquePneuVendu.setType(pneu.getType());
 		historiquePneuVendu.setBenifice((prixVente - pneu.getPrixAchat())*quantiteVendu);
 		historiquePneuVenduService.addVentePneu(historiquePneuVendu);
 	}
 
 	public void updatePneu(Pneu pneu) {
-		List<Pneu> pneuExists = pneuRepository.trouverAllSameMarqueAndNumero(pneu.getId(),pneu.getNumero(),pneu.getMarque().getId());
+		List<Pneu> pneuExists = pneuRepository.trouverAllSameMarqueAndNumero(pneu.getId(),pneu.getNumero(),
+				pneu.getMarque().getId(), pneu.getType());
 		Pneu pneuTrouve = (pneuExists != null && !pneuExists.isEmpty() ? pneuExists.get(0) : null);
 		if (pneuTrouve != null) {
 			LOGGER.info("Pneu exists already : {}", pneu.toString());
@@ -80,6 +82,7 @@ public class PneuService {
 		historiqueAchatPneu.setPrixAchat(pneu.getPrixAchat());
 		historiqueAchatPneu.setPrixVente(pneu.getPrixVente());
 		historiqueAchatPneu.setQuantite(pneu.getQuantite());
+		historiqueAchatPneu.setType(pneu.getType());
 		historiqueAchatPneuService.addHistorique(historiqueAchatPneu);
 	}
 

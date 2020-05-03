@@ -39,6 +39,9 @@ public class Pneu {
 	@Column(name = "prix_vente")
 	private int prixVente;
 	
+	@Column(name = "type")
+	private String type;
+	
 	@ManyToOne
 	@JoinColumn(name = "marque_id", referencedColumnName = "ID")
 	Marque marque;

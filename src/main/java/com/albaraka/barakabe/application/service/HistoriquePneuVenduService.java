@@ -32,6 +32,17 @@ public class HistoriquePneuVenduService {
 		return historiquePneuVenduRepository.venteOfDay(currentDate);
 	}
 
+	public int getGainOfMonth() {
+		int gainOfMonth = historiquePneuVenduRepository.venteOfMonth();
+		LOGGER.info("le gain du mois des pneus est : {}",gainOfMonth);
+		return gainOfMonth;
+	}
+	
+	public int getGainOfYesterday() {
+		int gainOfYesterday = historiquePneuVenduRepository.venteOfYesterday();
+		return gainOfYesterday;
+	}
+
 	public List<TopCinqMarqueVenduResponse> getTopCinqMarqueVendu() {
 		Date currentDate = new Date();
 		Date date = new Date();

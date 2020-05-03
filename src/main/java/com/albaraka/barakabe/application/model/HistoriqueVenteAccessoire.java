@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,42 +18,32 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "historique_pneu_vendu")
+@Table(name = "historique_accessoire_vendu")
 @Getter
 @Setter
 @ToString
-public class HistoriquePneuVendu {
+public class HistoriqueVenteAccessoire {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "numero")
-	private String numero;
-
-	@ManyToOne
-	@JoinColumn(name = "marque_id", referencedColumnName = "ID")
-	Marque marque;
+	@Column(name = "accessoire")
+	private String accessoire;
 
 	@Column(name = "quantite")
 	private int quantite;
 
 	@Column(name = "prix_vente")
 	private int prixVente;
-	
-	@Column(name = "benifice")
-	private int benifice;
-	
-	@Column(name = "type")
-	private String type;
 
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "Europe/Paris")
 	@Column(name = "date_vente")
 	Date dateVente;
 
-	public HistoriquePneuVendu() {
+	public HistoriqueVenteAccessoire() {
 		this.dateVente = new Date();
 	}
 }
