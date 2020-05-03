@@ -1,5 +1,6 @@
 package com.albaraka.barakabe.application.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,7 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.albaraka.barakabe.application.dto.statistique.TopCinqMarqueVenduProjection;
+import com.albaraka.barakabe.application.dto.statistique.PourcentageStockByMarqueProjection;
+import com.albaraka.barakabe.application.dto.statistique.PourcentageStockByMarqueResponse;
 import com.albaraka.barakabe.application.model.HistoriqueAchatPneu;
 import com.albaraka.barakabe.application.model.HistoriquePneuVendu;
 import com.albaraka.barakabe.application.model.Pneu;
@@ -32,7 +34,8 @@ public class PneuService {
 	}
 
 	public void addPneu(Pneu pneu) {
-		Pneu pneuExist = pneuRepository.findFirstByNumeroAndMarqueAndType(pneu.getNumero(), pneu.getMarque(), pneu.getType());
+		Pneu pneuExist = pneuRepository.findFirstByNumeroAndMarqueAndType(pneu.getNumero(), pneu.getMarque(),
+				pneu.getType());
 		if (pneuExist != null) {
 			pneuExist.setQuantite(pneu.getQuantite() + pneuExist.getQuantite());
 			pneuExist.setPrixAchat((pneu.getPrixAchat() + pneuExist.getPrixAchat()) / 2);
@@ -53,12 +56,12 @@ public class PneuService {
 		historiquePneuVendu.setQuantite(quantiteVendu);
 		historiquePneuVendu.setPrixVente(prixVente);
 		historiquePneuVendu.setType(pneu.getType());
-		historiquePneuVendu.setBenifice((prixVente - pneu.getPrixAchat())*quantiteVendu);
+		historiquePneuVendu.setBenifice((prixVente - pneu.getPrixAchat()) * quantiteVendu);
 		historiquePneuVenduService.addVentePneu(historiquePneuVendu);
 	}
 
 	public void updatePneu(Pneu pneu) {
-		List<Pneu> pneuExists = pneuRepository.trouverAllSameMarqueAndNumero(pneu.getId(),pneu.getNumero(),
+		List<Pneu> pneuExists = pneuRepository.trouverAllSameMarqueAndNumero(pneu.getId(), pneu.getNumero(),
 				pneu.getMarque().getId(), pneu.getType());
 		Pneu pneuTrouve = (pneuExists != null && !pneuExists.isEmpty() ? pneuExists.get(0) : null);
 		if (pneuTrouve != null) {
@@ -86,13 +89,15 @@ public class PneuService {
 		historiqueAchatPneuService.addHistorique(historiqueAchatPneu);
 	}
 
-	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		pneuRepository.deleteById(id);
-	}
+	public List<PourcentageStockByMarqueResponse> getPourcentageStockByMarque() {
+		List<PourcentageStockByMarqueProjection> pourcentagesByMarques = pneuRepository.pourcentageStockByMarque();
+		List<PourcentageStockByMarqueResponse> pourcentagesByMarquesResponse = new ArrayList<PourcentageStockByMarqueResponse>();
+		for (PourcentageStockByMarqueProjection pourcentageByMarque : pourcentagesByMarques) {
+			PourcentageStockByMarqueResponse pourcentageByMarqueResponse = new PourcentageStockByMarqueResponse(
+					pourcentageByMarque.getPourcentage(), pourcentageByMarque.getMarque().getLibelle());
+			pourcentagesByMarquesResponse.add(pourcentageByMarqueResponse);
 
-	public List<TopCinqMarqueVenduProjection> findTopCinqMarques() {
-		// TODO Auto-generated method stub
-		return null;
+		}
+		return pourcentagesByMarquesResponse;
 	}
 }
