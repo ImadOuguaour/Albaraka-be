@@ -1,0 +1,18 @@
+.container-pneu-vente{
+    padding: 20px;
+    background-color: white;
+    border-style: none;
+}
+
+.form-pneu-vente{
+    background-color: rgba(0, 61, 138, 0.08);
+    padding-left : 200px;
+    padding-right: 200px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-decoration: inherit;
+    color: #000000;
+    text-shadow: none;  
+    font-family: 'Open Sans','Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: bold;
+}

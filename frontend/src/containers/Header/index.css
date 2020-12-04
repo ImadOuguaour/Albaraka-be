@@ -1,0 +1,15 @@
+.logo{
+    height: 50px;
+    width: 50px;
+}
+
+.jumbotron {
+    background-image: url("../../images/pneu3.png");
+    background-size: cover;
+    overflow: hidden;
+    font-family: 'Open Sans','Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+.Breadcrumb {
+    background-color: red;
+}

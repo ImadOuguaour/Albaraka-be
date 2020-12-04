@@ -1,0 +1,9 @@
+.tab-pane{
+    padding: 60px;
+}
+
+.nav-link{
+    cursor: pointer;
+    font-family: calibri;
+    font-weight: bold;
+}
